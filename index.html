@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#00205b">
+  <meta name="description" content="Simulador didáctico de medición de campos electromagnéticos para higiene ocupacional.">
+  <title>Simulador CEM | La Movida SST Plus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-locked">
+  <section class="login-gate" id="loginGate" aria-labelledby="loginTitle">
+    <div class="login-shell">
+      <div class="login-story">
+        <a class="brand brand-light" href="https://laboratorio.movidasst.com"><img src="https://raw.githubusercontent.com/movidasst/sonometro/main/assets/logo-movida-sst-plus.png" alt="La Movida de SST Plus"><span><b>La Movida de SST Plus</b><small>De la Reacción a la Prevención</small></span></a>
+        <div><p class="eyebrow">LABORATORIO DE HIGIENE OCUPACIONAL</p><h1 id="loginTitle">Explora lo<br><em>invisible.</em></h1><p>Aprende a medir campos electromagnéticos con criterio técnico, no solo a leer una pantalla.</p></div>
+        <div class="feature-row"><span><b>01</b>E y B/H</span><span><b>02</b>RMS · FFT</span><span><b>03</b>WPM</span></div>
+      </div>
+      <div class="login-card">
+        <p class="card-kicker">PRÁCTICA EXCLUSIVA · INTEGRANTES</p><h2>Identifica tu acceso</h2><p>Usa la cédula y el código recibidos al registrarte en La Movida SST Plus.</p>
+        <form id="memberLogin" novalidate>
+          <label for="memberId">Cédula de identidad</label><input id="memberId" inputmode="numeric" autocomplete="username" placeholder="Solo números" required>
+          <label for="memberPassword">Clave o código de integrante</label><div class="password-wrap"><input id="memberPassword" type="password" autocomplete="current-password" placeholder="Escribe tu clave" required><button id="togglePassword" type="button">Mostrar</button></div>
+          <p id="loginMessage" class="form-message" role="status" aria-live="polite"></p><button class="primary wide" id="loginSubmit" type="submit"><span>Abrir simulador</span> →</button>
+        </form>
+        <div class="register"><b>¿Aún no eres integrante?</b><span>El registro y el acceso son gratuitos.</span><a href="https://registro.movidasst.com">Registrarme ahora</a></div>
+        <small>La validación usa el registro oficial. No guardamos tu cédula ni tu clave.</small>
+      </div>
+    </div>
+  </section>
+
+  <div id="appShell" hidden>
+    <header class="topbar"><a class="brand" href="https://laboratorio.movidasst.com"><img src="https://raw.githubusercontent.com/movidasst/sonometro/main/assets/logo-movida-sst-plus.png" alt="Logo La Movida SST Plus"><span><b>La Movida de SST Plus</b><small>Laboratorio de Higiene Ocupacional</small></span></a><div class="session"><span>Hola, <b id="memberName">integrante</b></span><button id="logoutBtn">Salir</button></div></header>
+    <nav class="modebar"><button class="mode active" data-mode="guided">Modo guiado</button><button class="mode" data-mode="free">Práctica libre</button><button id="conceptBtn">Conceptos CEM</button><button id="manualBtn" disabled title="Se habilitará cuando el manual esté disponible">↓ Descargar manual · próximamente</button></nav>
+
+    <main>
+      <section class="intro"><div><p class="eyebrow teal">SIMULADOR DE MEDICIÓN CEM</p><h1>Mide, analiza e interpreta</h1><p>Instrumento didáctico multibanda inspirado en equipos profesionales. Selecciona la sonda, prepara la medición y evalúa el resultado.</p></div><label>Escenario ocupacional<select id="scenarioSelect"><option value="transformer">Centro de transformación</option><option value="welding">Soldadura por resistencia</option><option value="induction">Calentamiento por inducción</option><option value="mri">Entorno de resonancia magnética</option><option value="antenna">Mantenimiento de antenas</option></select></label></section>
+
+      <section class="guided-card" id="guidedCard"><div class="step-count"><span id="stepNumber">PASO 1 DE 8</span><div class="progress"><i id="progressBar"></i></div></div><div class="guide-copy"><span class="guide-icon" id="guideIcon">01</span><div><h2 id="guideTitle">Inspecciona y enciende</h2><p id="guideText"></p><p class="why" id="guideWhy"></p></div></div><div class="guide-actions"><button id="prevStep">← Anterior</button><button class="primary" id="guideAction">Encender equipo</button><button id="nextStep">Siguiente →</button></div></section>
+
+      <div class="workgrid">
+        <section class="instrument-stage" aria-label="Medidor didáctico de campos electromagnéticos">
+          <div class="ambient"><i></i><i></i><i></i></div>
+          <div class="probe" id="probe"><div class="probe-head"><span></span><span></span><span></span><b>E · H</b></div><div class="probe-neck"></div><div class="probe-label">SONDA ISOTRÓPICA<br><b id="probeBadge">CEM–10M</b></div></div>
+          <div class="meter" id="meter">
+            <div class="meter-top"><span>CEM</span><b>FIELD LAB</b><i id="powerLed"></i></div>
+            <div class="screen off" id="screen">
+              <div class="screen-head"><span id="screenMode">RMS · B</span><span id="battery">▰▰▰▰</span></div>
+              <div class="screen-main"><span id="reading">--.--</span><small id="unit">µT</small></div>
+              <div class="axis"><span>X <b id="axisX">--</b></span><span>Y <b id="axisY">--</b></span><span>Z <b id="axisZ">--</b></span></div>
+              <div class="spectrum" id="spectrum"></div>
+              <div class="screen-foot"><span id="frequency">50 Hz</span><span id="percent">-- % límite</span></div>
+            </div>
+            <div class="softkeys"><button data-key="mode">MODO</button><button data-key="hold">HOLD</button><button data-key="save">GUARDAR</button></div>
+            <div class="keypad"><button class="round" data-key="back">↶</button><div class="dpad"><button data-key="up">▲</button><button data-key="left">◀</button><button data-key="ok">OK</button><button data-key="right">▶</button><button data-key="down">▼</button></div><button class="power" id="powerBtn" aria-label="Encender o apagar">⏻</button></div>
+            <div class="meter-brand"><b>MOVICEM</b><span>PRO · Instrumento didáctico</span></div>
+          </div>
+        </section>
+
+        <aside class="control-panel">
+          <div class="panel-head"><div><p>CONTROL DIRECTO</p><h2>Preparación y medida</h2></div><span id="statusChip" class="status">APAGADO</span></div>
+          <label>1. Sonda conectada<select id="probeSelect"><option value="none">Seleccionar sonda…</option><option value="eh10m">CEM–10M · E y H/B · 1 Hz–10 MHz</option><option value="efield">E–60G · Campo E · 100 kHz–60 GHz</option><option value="static">DC–MAG · B estático · 0 Hz</option></select></label>
+          <div class="field-help" id="probeHelp">El rango y la magnitud dependen de la sonda. No empieces a medir sin verificarla.</div>
+          <div class="two"><label>Magnitud<select id="quantitySelect"><option value="B">B · densidad de flujo</option><option value="H">H · campo magnético</option><option value="E">E · campo eléctrico</option></select></label><label>Visualización<select id="viewSelect"><option value="RMS">RMS</option><option value="FFT">FFT</option><option value="WPM">WPM</option></select></label></div>
+          <label>Banda<select id="bandSelect"><option value="full">Completa · 1 Hz–10 MHz</option><option value="low">Baja · 1 Hz–400 kHz</option></select></label>
+          <label>Criterio de comparación<select id="criterionSelect"><option value="eu">Directiva 2013/35/UE · NA inferiores</option><option value="icnirp">ICNIRP · ocupacional</option><option value="public">ICNIRP · público general</option></select></label>
+          <div class="measure-buttons"><button id="zeroBtn">Puesta a cero</button><button id="measureBtn" class="primary">Iniciar medición</button></div>
+          <p class="action-message" id="actionMessage" role="status">Enciende el instrumento para comenzar.</p>
+        </aside>
+      </div>
+
+      <section class="results">
+        <article><span>VALOR RMS</span><strong id="rmsResult">—</strong><small id="rmsCaption">Promedio eficaz de la señal</small></article><article><span>FRECUENCIA DOMINANTE</span><strong id="freqResult">—</strong><small>Identificada mediante FFT</small></article><article><span>ÍNDICE WPM</span><strong id="wpmResult">—</strong><small>Suma ponderada respecto del límite</small></article><article id="verdictCard"><span>INTERPRETACIÓN</span><strong id="verdict">Sin medición</strong><small id="verdictText">Completa el procedimiento</small></article>
+      </section>
+      <section class="scenario-info"><div><p class="eyebrow teal">ESCENARIO ACTIVO</p><h2 id="scenarioName"></h2><p id="scenarioDescription"></p></div><div class="warning"><b>Alcance didáctico</b><p>El resultado enseña el proceso de evaluación. Una medición real requiere equipo calibrado, incertidumbre, geometría, duración, condiciones de trabajo y normativa aplicable.</p></div></section>
+    </main>
+    <footer><span>Elaborado por <b>David Linares Brea</b> · info@movidasst.com · +56 9 6861 5650</span><span>www.movidasst.com · De la Reacción a la Prevención</span></footer>
+  </div>
+
+  <dialog id="conceptDialog"><button class="dialog-close" aria-label="Cerrar">×</button><p class="eyebrow teal">GUÍA RÁPIDA</p><h2>Lo que debes distinguir</h2><div class="concept-grid"><article><b>E</b><h3>Campo eléctrico</h3><p>Fuerza por unidad de carga. Se expresa normalmente en V/m.</p></article><article><b>B / H</b><h3>Campo magnético</h3><p>B es densidad de flujo (T); H es intensidad de campo (A/m). En aire se relacionan mediante B ≈ µ₀H.</p></article><article><b>RMS</b><h3>Valor eficaz</h3><p>Representa el efecto energético equivalente de una señal variable.</p></article><article><b>FFT</b><h3>Análisis espectral</h3><p>Separa la señal por frecuencias y revela componentes dominantes.</p></article><article><b>WPM</b><h3>Método de pico ponderado</h3><p>Pondera señales complejas respecto de límites dependientes de la frecuencia.</p></article><article><b>f</b><h3>Frecuencia</h3><p>Número de ciclos por segundo, en Hz; determina tanto la sonda como el criterio aplicable.</p></article></div><p class="dialog-note">E y H/B no son intercambiables en campo cercano. Mide la magnitud adecuada con una sonda compatible.</p></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
