@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260913-2">
 </head>
 <body class="auth-locked">
   <section class="login-gate" id="loginGate" aria-labelledby="loginTitle">
@@ -34,7 +34,7 @@
 
   <div id="appShell" hidden>
     <header class="topbar"><a class="brand" href="https://laboratorio.movidasst.com"><img src="https://raw.githubusercontent.com/movidasst/sonometro/main/assets/logo-movida-sst-plus.png" alt="Logo La Movida SST Plus"><span><b>La Movida de SST Plus</b><small>Laboratorio de Higiene Ocupacional</small></span></a><div class="session"><span>Hola, <b id="memberName">integrante</b></span><button id="logoutBtn">Salir</button></div></header>
-    <nav class="modebar"><button class="mode active" data-mode="guided">Modo guiado</button><button class="mode" data-mode="free">Práctica libre</button><button id="conceptBtn">Conceptos CEM</button><a id="manualBtn" href="https://drive.google.com/uc?id=1iGp9VGLgY9jbhmndJpbErWZ5c2mOMT6t&amp;export=download" target="_blank" rel="noopener">↓ Descargar manual</a></nav>
+    <nav class="modebar"><button class="mode active" data-mode="guided">Modo guiado</button><button class="mode" data-mode="free">Práctica libre</button><button id="conceptBtn">Conceptos CEM</button><a id="manualBtn" class="manual-download-link" href="https://drive.google.com/uc?id=1iGp9VGLgY9jbhmndJpbErWZ5c2mOMT6t&amp;export=download" target="_self" aria-label="Descargar manual de usuario CEM en PDF"><span aria-hidden="true">↓</span> Descargar manual PDF</a></nav>
 
     <main>
       <section class="intro"><div><p class="eyebrow teal">SIMULADOR DE MEDICIÓN CEM</p><h1>Mide, analiza e interpreta</h1><p>Instrumento didáctico multibanda inspirado en equipos profesionales. Selecciona la sonda, prepara la medición y evalúa el resultado.</p></div><label>Escenario ocupacional<select id="scenarioSelect"><option value="transformer">Centro de transformación</option><option value="welding">Soldadura por resistencia</option><option value="induction">Calentamiento por inducción</option><option value="mri">Entorno de resonancia magnética</option><option value="antenna">Mantenimiento de antenas</option></select></label></section>
